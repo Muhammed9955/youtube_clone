@@ -29,7 +29,7 @@ const Comment = ({ comment }) => {
             {moment(comment.created_at).fromNow()}
           </Typography>
         </div>
-        <div>{comment.text}</div>
+        <p>{comment.text}</p>
       </div>
     </div>
   );

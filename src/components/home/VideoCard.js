@@ -39,7 +39,7 @@ export default function VideoCard({ video, loading }) {
               height={200}
             />
           ) : (
-            <ReactPlayerCard style={reactPlayerStyle} />
+            <ReactPlayerCard url={video?.video_url} style={reactPlayerStyle} />
           )}
         </div>
         {/* <CardMedia
@@ -69,7 +69,7 @@ export default function VideoCard({ video, loading }) {
                 {video?.description.slice(0, 20)}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                {moment(video?.create_at).fromNow()}
+                {moment(video?.created_at).fromNow()}
               </Typography>
             </div>
           </div>
@@ -78,7 +78,7 @@ export default function VideoCard({ video, loading }) {
       <CardActions>
         <Button size="small" color="primary">
           <Link to={`/app/video/${video.id}`} style={{ color: "red" }}>
-            Video Page
+            View Video
           </Link>
         </Button>
       </CardActions>

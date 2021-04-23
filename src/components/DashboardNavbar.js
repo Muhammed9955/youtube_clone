@@ -1,30 +1,30 @@
-import { useState } from 'react';
+// import { useState } from "react";
 import {
-  Link as RouterLink
+  Link as RouterLink,
   // Navigate
-} from 'react-router-dom';
-import PropTypes from 'prop-types';
+} from "react-router-dom";
+import PropTypes from "prop-types";
 import {
   AppBar,
-  Badge,
+  // Badge,
   Box,
   Hidden,
   IconButton,
-  Toolbar
-} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
-import InputIcon from '@material-ui/icons/Input';
+  Toolbar,
+} from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
+// import NotificationsIcon from "@material-ui/icons/NotificationsOutlined";
+import InputIcon from "@material-ui/icons/Input";
 // import Logo from './Logo';
-import { useDispatch } from 'react-redux';
-import { logout } from '../redux/actions/auth';
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/actions/auth";
 
 const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
   const dispatch = useDispatch();
-  const [notifications] = useState([]);
+  // const [notifications] = useState([]);
   const logoutFunc = () => {
     dispatch(logout());
-    console.log('clicked');
+    console.log("clicked");
   };
 
   return (
@@ -33,7 +33,7 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
         <RouterLink to="/">{/* <Logo /> */}</RouterLink>
         <Box sx={{ flexGrow: 1 }} />
         <Hidden lgDown>
-          <IconButton color="inherit">
+          {/* <IconButton color="inherit">
             <Badge
               // badgeContent={5}
               badgeContent={notifications.length}
@@ -42,9 +42,9 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
             >
               <NotificationsIcon />
             </Badge>
-          </IconButton>
+          </IconButton> */}
           <RouterLink to="/login" onClick={logoutFunc}>
-            <InputIcon style={{ color: 'white' }} />
+            <InputIcon style={{ color: "white" }} />
           </RouterLink>
         </Hidden>
         <Hidden lgUp>
@@ -58,7 +58,7 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
 };
 
 DashboardNavbar.propTypes = {
-  onMobileNavOpen: PropTypes.func
+  onMobileNavOpen: PropTypes.func,
 };
 
 export default DashboardNavbar;

@@ -1,5 +1,12 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { Divider, Grid, IconButton, Paper, Skeleton } from "@material-ui/core";
+import {
+  Divider,
+  Grid,
+  IconButton,
+  Paper,
+  Skeleton,
+  Typography,
+} from "@material-ui/core";
 import moment from "moment";
 import React from "react";
 import { useParams } from "react-router";
@@ -13,8 +20,10 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import AlertDialog from "../components/MUI/AlertDialog";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const VideoPage = ({ video }) => {
+  const user = useSelector((state) => state.auth?.user);
   const { id } = useParams();
   const { loading: loadingVideo, data } = useQuery(FETCH_VIDEO, {
     variables: {
@@ -76,42 +85,52 @@ const VideoPage = ({ video }) => {
                       padding: "1rem",
                     }}
                   >
-                    <h3 gutterBottom variant="h5" component="h2">
+                    <Typography gutterBottom variant="h5" component="h2">
                       {data?.video?.title}
-                    </h3>
-                    <div variant="body2" color="textSecondary" component="p">
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
                       {data?.video?.description}
-                    </div>
-                    <div variant="body2" color="textSecondary" component="p">
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
                       {`${moment(data?.video?.create_at).format("LL")} `}
-                    </div>
+                    </Typography>
                   </div>
-                  <div style={{ padding: "1rem" }}>
-                    <Link to={`/app/video/edit/${id}/`}>
+                  {data?.video?.owner.id === user?.id && (
+                    <div style={{ padding: "1rem" }}>
+                      <Link to={`/app/video/edit/${id}/`}>
+                        <IconButton
+                          // color="primary"
+                          aria-label="upload picture"
+                          component="span"
+                        >
+                          <EditIcon fontSize="medium" />
+                        </IconButton>
+                      </Link>
+
                       <IconButton
-                        // color="primary"
+                        color="primary"
                         aria-label="upload picture"
                         component="span"
                       >
-                        <EditIcon fontSize="medium" />
+                        <AlertDialog
+                          icon={<DeleteIcon style={{ color: "red" }} />}
+                          title="Delete Video Alert"
+                          msg="Are you sure that you wanna remove this video?"
+                          onAgree={() => {
+                            deleteVideo();
+                          }}
+                        />
                       </IconButton>
-                    </Link>
-
-                    <IconButton
-                      color="primary"
-                      aria-label="upload picture"
-                      component="span"
-                    >
-                      <AlertDialog
-                        icon={<DeleteIcon style={{ color: "red" }} />}
-                        title="Delete Video Alert"
-                        msg="Are you sure that you wanna remove this video?"
-                        onAgree={() => {
-                          deleteVideo();
-                        }}
-                      />
-                    </IconButton>
-                  </div>
+                    </div>
+                  )}
                 </div>
               </Paper>
             </Grid>
@@ -119,21 +138,17 @@ const VideoPage = ({ video }) => {
               item
               sm={12}
               xs={12}
-              style={{ padding: "1rem", height: "60vh", overflowY: "scroll" }}
+              style={{ padding: "1rem", height: "70vh", overflowY: "scroll" }}
             >
               <Paper style={{ padding: "1rem" }}>
-                {/* <div className=""> Comments</div> */}
                 <Divider />
-                <AddComment
-                  user={data?.video.owner.id}
-                  video={data?.video.id}
-                />
+                <AddComment user={data?.video.owner.id} video={data?.video} />
                 <br />
                 <Divider />
                 <div style={{ marginTop: "1rem" }}>
                   {data?.video.comments.map((i, indx) => (
-                    <div style={{ marginTop: "1rem" }}>
-                      <Comment key={indx} comment={i} />
+                    <div key={i.id} style={{ marginTop: "1rem" }}>
+                      <Comment comment={i} />
                     </div>
                   ))}
                 </div>
@@ -145,7 +160,7 @@ const VideoPage = ({ video }) => {
         <Grid item sm={4} xs={12} style={{ padding: "1rem" }}>
           <Grid>
             {videosData?.videos.map((i, indx) => (
-              <div style={{ marginBottom: "1rem" }}>
+              <div key={i.id} style={{ marginBottom: "1rem" }}>
                 {loadingVidoes ? (
                   <Skeleton
                     animation="wave"
@@ -154,7 +169,9 @@ const VideoPage = ({ video }) => {
                     height={200}
                   />
                 ) : (
-                  <VideoCard video={i} loading={loadingVideo} />
+                  <Link key={i.id} to={`/app/video/${i.id}`}>
+                    <VideoCard video={i} loading={loadingVideo} />
+                  </Link>
                 )}
               </div>
             ))}

@@ -59,10 +59,11 @@ const AddComment = ({ user, video }) => {
       console.log({ err });
     },
   });
+  console.log({ video });
 
   return (
     <Card style={{ marginBottom: "1rem" }}>
-      <CardHeader title="Comments" subheader="" />
+      <CardHeader title={`${video?.comments?.length} Comments`} subheader="" />
       <Divider />
       {loading ? (
         <Spinner height="20vh" />
@@ -80,7 +81,7 @@ const AddComment = ({ user, video }) => {
               const fromData = {
                 text: data.text,
                 user,
-                video,
+                video: video.id,
               };
               createComment({
                 variables: {

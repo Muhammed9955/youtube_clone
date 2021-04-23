@@ -82,9 +82,10 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   let User = useSelector((state) => state.auth?.user);
   const dispatch = useDispatch();
   const location = useLocation();
+
   useEffect(() => {
-    onMobileClose();
-  }, [location.pathname, onMobileClose]);
+    // onMobileClose();
+  }, [location.pathname]);
   const logoutFunc = () => dispatch(logout());
   const content = (
     <Box

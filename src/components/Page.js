@@ -11,6 +11,7 @@ const Page = ({ title, children }) => (
         backgroundColor: "background.default",
         minHeight: "100%",
         py: 3,
+        marginBottom: "4rem",
       }}
     >
       <Container maxWidth="lg">{children}</Container>

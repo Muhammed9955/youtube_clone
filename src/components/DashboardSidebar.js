@@ -145,22 +145,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
         </List>
       </Box>
       <Box sx={{ flexGrow: 1 }} />
-      <Box
-        sx={{
-          backgroundColor: "background.default",
-          m: 2,
-          p: 2,
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            pt: 2,
-          }}
-        ></Box>
       </Box>
-    </Box>
   );
 
   return (
@@ -188,8 +173,9 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           PaperProps={{
             sx: {
               width: 256,
-              top: 64,
-              height: "calc(100% - 64px)",
+              // top: 64,
+              // height: "calc(100% - 64px)",
+              height: "calc(100%)",
             },
           }}
         >

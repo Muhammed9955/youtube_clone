@@ -66,7 +66,7 @@ const VideoPage = ({ video }) => {
                   height="100%"
                 />
               ) : (
-                <ReactPlayerCard />
+                <ReactPlayerCard url={data?.video.video_url} />
               )}
             </Grid>
             <Grid item sm={12} xs={12} style={{ padding: "1rem" }}>

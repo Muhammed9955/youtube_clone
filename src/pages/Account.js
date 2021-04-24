@@ -13,6 +13,7 @@ const Account = () => (
         backgroundColor: "background.default",
         minHeight: "100%",
         py: 3,
+        marginBottom: "2rem",
       }}
     >
       <Container maxWidth="lg">

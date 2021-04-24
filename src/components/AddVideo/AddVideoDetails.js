@@ -70,12 +70,12 @@ const AddVideoDetails = (props) => {
     },
     onError(err) {
       err &&
-        setErrors(
-          err?.graphQLErrors[0]?.extensions.exception.data?.data[0].messages[0]
-            .message
-        );
-      // setErrors(err);
-      console.log({ err });
+        // setErrors(
+        //   err?.graphQLErrors[0]?.extensions.exception.data?.data[0].messages[0]
+        //     .message
+        // );
+        // setErrors(err);
+        console.log({ err });
     },
   });
 
@@ -203,7 +203,7 @@ const AddVideoDetails = (props) => {
                 channel_Title: "",
                 channel_Id: "",
                 owner: user.id,
-                video_url: VideoUrl && VideoUrl,
+                video_url: id ? oldVideo.video.video_url : VideoUrl,
               };
               id
                 ? updateVideo({

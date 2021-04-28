@@ -75,5 +75,5 @@
   "devDependencies": {
     "eslint-config-airbnb": "^18.2.1"
   },
-  "proxy": "http://localhost:1337/graphql"
+  "proxy": "https://y-clone-strapi-pg.herokuapp.com/graphql"
 }

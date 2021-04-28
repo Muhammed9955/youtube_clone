@@ -14,7 +14,6 @@ import {
 import { useSelector } from "react-redux";
 import { CREATE_VIDEO, FETCH_VIDEO, UPDATE_VIDEO } from "../../utils/graphql";
 import { useMutation, useQuery } from "@apollo/client";
-import Spinner from "../Spinner";
 import { inputsData } from "./data";
 import AddToQueueIcon from "@material-ui/icons/AddToQueue";
 import LoadingButton from "../MUI/LoadingButton";
@@ -179,126 +178,123 @@ const AddVideoDetails = (props) => {
         subheader="The information can be edited"
       />
       <Divider />
-      {loading ? (
-        <Spinner height="20vh" />
-      ) : (
-        <CardContent>
-          <Formik
-            enableReinitialize={true}
-            initialValues={{
-              title: oldVideo ? oldVideo?.video.title : "",
-              description: oldVideo ? oldVideo?.video.description : "",
-            }}
-            validationSchema={Yup.object().shape({
-              title: Yup.string().max(255).required("Title is required"),
-              description: Yup.string()
-                .max(255)
-                .required("Description is required"),
-            })}
-            onSubmit={(data) => {
-              // navigate("/app/dashboard", { replace: true });
-              const fromData = {
-                title: data.title,
-                description: data.description,
-                channel_Title: "",
-                channel_Id: "",
-                owner: user.id,
-                video_url: id ? oldVideo.video.video_url : VideoUrl,
-              };
-              id
-                ? updateVideo({
-                    variables: {
-                      id,
-                      data: fromData,
-                    },
-                  })
-                : createVideo({
-                    variables: {
-                      data: fromData,
-                    },
-                  });
-              setValues(data);
-              console.log({ data });
-              console.log({ fromData });
-            }}
-          >
-            {({
-              errors,
-              handleBlur,
-              handleChange,
-              handleSubmit,
-              isSubmitting,
-              touched,
-              values,
-            }) => (
-              // <form onSubmit={onSubmit}>
-              <form onSubmit={handleSubmit}>
-                <Grid container spacing={3}>
-                  {inputsData.map((i, indx) => (
-                    <Grid key={indx} item xs={i.xs} sm={i.sm}>
-                      <TextField
-                        error={Boolean(touched.title && errors.title)}
-                        fullWidth
-                        helperText={touched.description && errors.description}
-                        label={i.label}
-                        name={i.name}
-                        // margin="normal"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        value={values[i.name]}
-                        variant="outlined"
-                        multiline={i.multiline}
-                        rows={3}
-                      />
-                    </Grid>
-                  ))}
-                </Grid>
-                <div className="">
-                  <input
-                    type="file"
-                    id="imageInput"
-                    hidden="hidden"
-                    onChange={handleVideoChange}
-                  />
-                  <div style={{ color: "red", marginTop: "1rem" }}>
-                    {Errors && Errors}
-                  </div>
-                  <br />
-                  <LoadingButton
-                    variant="contained"
-                    startIcon={<AddToQueueIcon />}
-                    onClick={handleEditPicture}
-                    style={{ marginBottom: "1rem" }}
-                    disabled={loadingUplaod}
-                    loading={loadingUplaod}
-                    title="Uplaod Video"
-                  />
 
-                  <Divider />
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "flex-end",
-                      p: 2,
-                    }}
-                  >
-                    <LoadingButton
-                      color="primary"
-                      disabled={isSubmitting}
+      <CardContent>
+        <Formik
+          enableReinitialize={true}
+          initialValues={{
+            title: oldVideo ? oldVideo?.video.title : "",
+            description: oldVideo ? oldVideo?.video.description : "",
+          }}
+          validationSchema={Yup.object().shape({
+            title: Yup.string().max(255).required("Title is required"),
+            description: Yup.string()
+              .max(255)
+              .required("Description is required"),
+          })}
+          onSubmit={(data) => {
+            // navigate("/app/dashboard", { replace: true });
+            const fromData = {
+              title: data.title,
+              description: data.description,
+              channel_Title: "",
+              channel_Id: "",
+              owner: user.id,
+              video_url: id ? oldVideo.video.video_url : VideoUrl,
+            };
+            id
+              ? updateVideo({
+                  variables: {
+                    id,
+                    data: fromData,
+                  },
+                })
+              : createVideo({
+                  variables: {
+                    data: fromData,
+                  },
+                });
+            setValues(data);
+            console.log({ data });
+            console.log({ fromData });
+          }}
+        >
+          {({
+            errors,
+            handleBlur,
+            handleChange,
+            handleSubmit,
+            isSubmitting,
+            touched,
+            values,
+          }) => (
+            // <form onSubmit={onSubmit}>
+            <form onSubmit={handleSubmit}>
+              <Grid container spacing={3}>
+                {inputsData.map((i, indx) => (
+                  <Grid key={indx} item xs={i.xs} sm={i.sm}>
+                    <TextField
+                      error={Boolean(touched.title && errors.title)}
                       fullWidth
-                      size="large"
-                      type="submit"
-                      variant="contained"
-                      title="Save"
-                      loading={isSubmitting}
+                      helperText={touched.description && errors.description}
+                      label={i.label}
+                      name={i.name}
+                      // margin="normal"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      value={values[i.name]}
+                      variant="outlined"
+                      multiline={i.multiline}
+                      rows={3}
                     />
-                  </Box>
+                  </Grid>
+                ))}
+              </Grid>
+              <div className="">
+                <input
+                  type="file"
+                  id="imageInput"
+                  hidden="hidden"
+                  onChange={handleVideoChange}
+                />
+                <div style={{ color: "red", marginTop: "1rem" }}>
+                  {Errors && Errors}
                 </div>
-              </form>
-            )}
-          </Formik>
-        </CardContent>
-      )}
+                <br />
+                <LoadingButton
+                  variant="contained"
+                  startIcon={<AddToQueueIcon />}
+                  onClick={handleEditPicture}
+                  style={{ marginBottom: "1rem" }}
+                  disabled={loadingUplaod}
+                  loading={loadingUplaod}
+                  title="Uplaod Video"
+                />
+
+                <Divider />
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    p: 2,
+                  }}
+                >
+                  <LoadingButton
+                    color="primary"
+                    disabled={loading}
+                    fullWidth
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                    title="Save"
+                    loading={loading}
+                  />
+                </Box>
+              </div>
+            </form>
+          )}
+        </Formik>
+      </CardContent>
     </Card>
   );
 };

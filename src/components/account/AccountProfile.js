@@ -39,13 +39,13 @@ const AccountProfile = (props) => {
             }}
           />
           <Typography color="textPrimary" gutterBottom variant="h3">
-            {user.username}
+            {user?.username}
           </Typography>
           <Typography color="textSecondary" variant="body1">
-            {` ${user.email}`}
+            {` ${user?.email}`}
           </Typography>
           <Typography color="textSecondary" variant="body1">
-            {`JoinedAt: ${moment(user.create_at).format("LL")} `}
+            {`JoinedAt: ${moment(user?.create_at).format("LL")} `}
           </Typography>
         </Box>
       </CardContent>
